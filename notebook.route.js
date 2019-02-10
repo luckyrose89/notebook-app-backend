@@ -1,22 +1,30 @@
 const express = require("express");
 const notebookRoute = express.Router();
 
-// let notebook = require('./notebook.model');
+let Notebook = require("./notebook.model");
 
 //Define Routes for Notebook
-notebookRoute.get("/viewbooks", (req, res) => {
+notebookRoute.get("/notebooks", (req, res) => {
   res.send("GET WORKS!!");
 });
 
-notebookRoute.post("/createbook", (req, res) => {
-  res.send("POST WORKS!!");
+notebookRoute.post("/notebooks/add", (req, res) => {
+  let notebook = new Notebook(req.body);
+  notebook
+    .save()
+    .then(notebook => {
+      res.status(200).json({ notebook: "notebook added successfully" });
+    })
+    .catch(err => {
+      res.status(400).send("unable to save to database!");
+    });
 });
 
-notebookRoute.post("/updatebook", (req, res) => {
+notebookRoute.post("/notebooks/:id/edit", (req, res) => {
   res.send("UPDATE WORKS");
 });
 
-notebookRoute.delete("/deletebook", (req, res) => {
+notebookRoute.delete("/notebooks/:id/delete", (req, res) => {
   res.send("DELETE WORKS");
 });
 
