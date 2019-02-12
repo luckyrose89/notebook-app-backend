@@ -26,22 +26,15 @@ notebookRoute.post("/add", (req, res) => {
     });
 });
 
-notebookRoute.post("/:id/edit", (req, res) => {
+notebookRoute.post("/edit", (req, res) => {
   res.send("UPDATE WORKS");
 });
 
-notebookRoute.delete("/:id/delete", (req, res) => {
-  res.send("DELETE WORKS");
-});
-
-// Define routes for Notebook Pages
-
-notebookRoute.get("/:id", (req, res) => {
-  res.send("Notepage get works!!");
-});
-
-notebookRoute.post("/:id/addPage", (req, res) => {
-  res.send("Notebook page add route works!!");
+notebookRoute.delete("/delete/:id", (req, res) => {
+  Notebook.findByIdAndRemove({ _id: req.params.id }, (err, book) => {
+    if (err) res.json(err);
+    else res.json("Successfully removed");
+  });
 });
 
 module.exports = notebookRoute;
