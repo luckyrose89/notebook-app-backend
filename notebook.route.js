@@ -26,7 +26,7 @@ notebookRoute.post("/add", (req, res) => {
     });
 });
 
-notebookRoute.post("/edit", (req, res) => {
+notebookRoute.get("/edit/:id", (req, res) => {
   res.send("UPDATE WORKS");
 });
 
