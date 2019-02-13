@@ -30,10 +30,11 @@ notebookRoute.post("/edit", (req, res) => {
   res.send("UPDATE WORKS");
 });
 
-notebookRoute.delete("/delete/:id", (req, res) => {
-  Notebook.findByIdAndRemove({ _id: req.params.id }, (err, book) => {
-    if (err) res.json(err);
-    else res.json("Successfully removed");
+notebookRoute.get("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  Notebook.findOneAndDelete(id, err => {
+    if (err) return res.json(err);
+    return res.json({ success: true });
   });
 });
 
