@@ -1,5 +1,4 @@
 # notebook-app-backend
-
 Notebook app API based on MongoDB, Node and Express
 
 ## Available Scripts
@@ -9,9 +8,7 @@ To start server
 ```sh
 $ node server.js
 ```
-
 or
-
 ```sh
 $ nodemon server
 ```
