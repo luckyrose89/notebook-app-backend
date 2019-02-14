@@ -27,7 +27,13 @@ notebookRoute.post("/add", (req, res) => {
 });
 
 notebookRoute.get("/edit/:id", (req, res) => {
-  res.send("UPDATE WORKS");
+  Notebook.findById(req.params.id, (err, book) => {
+    if (err) {
+      res.send("Cannot fetch the selected entry at the moment!!");
+    } else {
+      res.json(book);
+    }
+  });
 });
 
 notebookRoute.post("/update/:id", (req, res) => {
