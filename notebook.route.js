@@ -3,7 +3,7 @@ const notebookRoute = express.Router();
 
 let Notebook = require("./notebook.model");
 
-//Define Routes for Notebook
+// Get all notebooks
 notebookRoute.get("/", (req, res) => {
   Notebook.find((err, notebookData) => {
     if (err) {
@@ -12,6 +12,12 @@ notebookRoute.get("/", (req, res) => {
       res.json(notebookData);
     }
   });
+});
+
+// Notebook CRUD routes
+
+notebookRoute.get("/:id", (req, res) => {
+  res.send("I work correctly");
 });
 
 notebookRoute.post("/add", (req, res) => {
