@@ -37,7 +37,22 @@ notebookRoute.get("/edit/:id", (req, res) => {
 });
 
 notebookRoute.post("/update/:id", (req, res) => {
-  res.send("Update works");
+  Notebook.findById(req.params.id, (err, book) => {
+    if (!book) {
+      res.status(404).send("Requested entry not found");
+    } else {
+      book.title = req.body.title;
+
+      book
+        .save()
+        .then(book => {
+          res.json("Database Updated!");
+        })
+        .catch(err => {
+          res.status(400).send("Unable to update the database");
+        });
+    }
+  });
 });
 
 notebookRoute.get("/delete/:id", (req, res) => {
