@@ -16,11 +16,7 @@ notebookRoute.get("/", (req, res) => {
 
 // Notebook CRUD routes
 
-notebookRoute.get("/:id", (req, res) => {
-  res.send("I work correctly");
-});
-
-notebookRoute.post("/add", (req, res) => {
+notebookRoute.post("/", (req, res) => {
   let notebook = new Notebook(req.body);
   notebook
     .save()
@@ -32,7 +28,7 @@ notebookRoute.post("/add", (req, res) => {
     });
 });
 
-notebookRoute.get("/edit/:id", (req, res) => {
+notebookRoute.get("/:id", (req, res) => {
   Notebook.findById(req.params.id, (err, book) => {
     if (err) {
       res.send("Cannot fetch the selected entry at the moment!!");
@@ -42,7 +38,7 @@ notebookRoute.get("/edit/:id", (req, res) => {
   });
 });
 
-notebookRoute.post("/update/:id", (req, res) => {
+notebookRoute.post("/:id", (req, res) => {
   Notebook.findById(req.params.id, (err, book) => {
     if (!book) {
       res.status(404).send("Requested entry not found");
@@ -61,12 +57,14 @@ notebookRoute.post("/update/:id", (req, res) => {
   });
 });
 
-notebookRoute.get("/delete/:id", (req, res) => {
+notebookRoute.delete("/:id", (req, res) => {
   const id = req.params.id;
   Notebook.findOneAndDelete(id, err => {
     if (err) return res.json(err);
     return res.json({ success: true });
   });
 });
+
+// Notepage CRUD routes
 
 module.exports = notebookRoute;
