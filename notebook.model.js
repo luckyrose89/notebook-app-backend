@@ -6,14 +6,14 @@ let flashcards = new Schema({
   back: { type: String, required: true }
 });
 
-let questionAnswer = new Schema({
-  question: { type: String, required: true },
-  answer: { type: String, required: true }
-});
-
 let notePage = new Schema({
   title: { type: String, required: true },
-  questionAnswerArray: [questionAnswer],
+  questionAnswer: [
+    {
+      question: { type: String, required: true },
+      answer: { type: String, required: true }
+    }
+  ],
   summary: { type: String, required: true }
 });
 

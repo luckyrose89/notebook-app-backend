@@ -67,4 +67,24 @@ notebookRoute.delete("/:id", (req, res) => {
 
 // Notepage CRUD routes
 
+notebookRoute.post("/addpage/:id", (req, res) => {
+  Notebook.findById(req.params.id, (err, book) => {
+    const { title, questionAnswer, summary } = req.body;
+    book.notes = book.notes.concat({
+      title: title,
+      questionAnswer: questionAnswer,
+      summary: summary
+    });
+
+    book
+      .save()
+      .then(data => {
+        res.json(book);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+});
+
 module.exports = notebookRoute;
