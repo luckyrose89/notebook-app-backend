@@ -59,9 +59,9 @@ notebookRoute.post("/:id", (req, res) => {
 
 notebookRoute.delete("/:id", (req, res) => {
   const id = req.params.id;
-  Notebook.findOneAndDelete(id, err => {
+  Notebook.findOneAndDelete(id, (err, book) => {
     if (err) return res.json(err);
-    return res.json({ success: true });
+    return res.json(book);
   });
 });
 
@@ -87,10 +87,25 @@ notebookRoute.post("/addpage/:id", (req, res) => {
   });
 });
 
-notebookRoute.get("/editpage/:id", (req, res) => {});
+notebookRoute.get("/edit/:id/:note", (req, res) => {});
 
-notebookRoute.post("/editpage/:id", (req, res) => {});
+notebookRoute.post("/edit/:id/:note", (req, res) => {});
 
-notebookRoute.delete("/deletepage/:id", (req, res) => {});
+notebookRoute.get("/delete/:id/:note", (req, res) => {
+  let bookId = req.params.id;
+  let noteId = req.params.note;
+  Notebook.findById(bookId, (err, book) => {
+    book.notes.id(noteId).remove();
+    book
+      .save()
+      .then(data => {
+        res.json(book);
+        console.log(book);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+});
 
 module.exports = notebookRoute;
