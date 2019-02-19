@@ -87,4 +87,10 @@ notebookRoute.post("/addpage/:id", (req, res) => {
   });
 });
 
+notebookRoute.get("/editpage/:id", (req, res) => {});
+
+notebookRoute.post("/editpage/:id", (req, res) => {});
+
+notebookRoute.delete("/deletepage/:id", (req, res) => {});
+
 module.exports = notebookRoute;
