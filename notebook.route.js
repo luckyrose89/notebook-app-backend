@@ -58,8 +58,7 @@ notebookRoute.post("/:id", (req, res) => {
 });
 
 notebookRoute.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  Notebook.findOneAndDelete(id, (err, book) => {
+  Notebook.findOneAndDelete({ _id: req.params.id }, (err, book) => {
     if (err) return res.json(err);
     return res.json(book);
   });
