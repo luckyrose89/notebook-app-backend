@@ -86,7 +86,19 @@ notebookRoute.post("/addpage/:id", (req, res) => {
   });
 });
 
-notebookRoute.get("/edit/:id/:note", (req, res) => {});
+notebookRoute.get("/edit/:id/:note", (req, res) => {
+  let bookId = req.params.id;
+  let noteId = req.params.note;
+
+  Notebook.findById(bookId, (err, book) => {
+    let result = book.notes.id(noteId);
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 notebookRoute.post("/edit/:id/:note", (req, res) => {});
 
