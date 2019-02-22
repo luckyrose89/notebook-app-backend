@@ -100,7 +100,24 @@ notebookRoute.get("/edit/:id/:note", (req, res) => {
   });
 });
 
-notebookRoute.post("/edit/:id/:note", (req, res) => {});
+notebookRoute.post("/edit/:id/:note", (req, res) => {
+  let bookId = req.params.id;
+  let noteId = req.params.note;
+  Notebook.findById(bookId, (err, book) => {
+    let result = book.notes.id(noteId);
+    result.title = req.body.title;
+    result.summary = req.body.summary;
+    result.questionAnswer = req.body.questionAnswer;
+    book
+      .save()
+      .then(book => {
+        res.json("Database Updated!");
+      })
+      .catch(err => {
+        res.status(400).send("Unable to update the database");
+      });
+  });
+});
 
 notebookRoute.get("/delete/:id/:note", (req, res) => {
   let bookId = req.params.id;
