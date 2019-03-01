@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const PORT = 3001;
 const cors = require("cors");
-const notebookRoute = require("./notebook.route");
+const notebookRoute = require("./routes/notebook.route");
 const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
@@ -28,6 +28,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/notebook", notebookRoute);
+app.use((err, req, res, next) => {
+  console.error(err);
+  return res.send({ error: err.message });
+});
 
 app.get("/", (req, res) => {
   res.send("Welcome to notebook API");
