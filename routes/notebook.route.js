@@ -107,6 +107,8 @@ notebookRoute.post("/add/:id", (req, res, next) => {
   });
 });
 
+// Bug in edit feature
+
 notebookRoute.get("/edit/:id/:note", (req, res, next) => {
   let bookId = req.params.id;
   let noteId = req.params.note;
