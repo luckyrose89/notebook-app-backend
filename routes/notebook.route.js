@@ -8,7 +8,7 @@ notebookRoute.get("/", (req, res) => {
   Notebook.find((err, notebookData) => {
     if (err) {
       res.status(404);
-      err.message = "An error occured while fetching db: ";
+      err.message = "An error occured while fetching database";
       next(err);
     } else {
       res.json(notebookData);
@@ -33,7 +33,7 @@ notebookRoute.post("/", (req, res, next) => {
 });
 
 notebookRoute.get("/:id", (req, res, next) => {
-  Notebook.findById(req.params.id, (err, book) => {
+  Notebook.findById({ _id: req.params.id }, (err, book) => {
     if (err) {
       res.status(400);
       err.message = "Cannot fetch the requested book at the moment.";
@@ -45,11 +45,10 @@ notebookRoute.get("/:id", (req, res, next) => {
 });
 
 notebookRoute.post("/:id", (req, res, next) => {
-  Notebook.findById(req.params.id, (err, book) => {
-    if (!book) {
+  Notebook.findById({ _id: req.params.id }, (err, book) => {
+    if (err) {
       res.status(404);
-      errMessage = new Error("Requested book not found");
-      next(errMessage);
+      next(err);
     } else {
       book.title = req.body.title;
       book
@@ -84,7 +83,6 @@ notebookRoute.post("/add/:id", (req, res, next) => {
   Notebook.findById(req.params.id, (err, book) => {
     if (err) {
       res.status(400);
-      err.message = "Cannot add page to requested book";
       next(err);
     } else {
       const { title, questionAnswer, summary } = req.body;
@@ -107,55 +105,67 @@ notebookRoute.post("/add/:id", (req, res, next) => {
   });
 });
 
-// Bug in edit feature
-
-notebookRoute.get("/edit/:id/:note", (req, res, next) => {
+notebookRoute.get("/:id/:note", (req, res, next) => {
   let bookId = req.params.id;
   let noteId = req.params.note;
 
-  Notebook.findById(bookId, (err, book) => {
-    let result = book.notes.id(noteId);
+  Notebook.findById({ _id: bookId }, (err, book) => {
     if (err) {
-      res.send(err);
+      res.status(404);
+      next(err);
     } else {
+      var result = book.notes.id(noteId);
       res.json(result);
     }
   });
 });
 
-notebookRoute.post("/edit/:id/:note", (req, res, next) => {
+notebookRoute.post("/:id/:note", (req, res, next) => {
   let bookId = req.params.id;
   let noteId = req.params.note;
-  Notebook.findById(bookId, (err, book) => {
-    let result = book.notes.id(noteId);
-    result.title = req.body.title;
-    result.summary = req.body.summary;
-    result.questionAnswer = req.body.questionAnswer;
-    book
-      .save()
-      .then(book => {
-        res.json(book);
-      })
-      .catch(err => {
-        res.status(400).send("Unable to update the database");
-      });
+  Notebook.findById({ _id: bookId }, (err, book) => {
+    if (err) {
+      res.status(404);
+      next(err);
+    } else {
+      let result = book.notes.id(noteId);
+      result.title = req.body.title;
+      result.summary = req.body.summary;
+      result.questionAnswer = req.body.questionAnswer;
+      book
+        .save()
+        .then(book => {
+          res.json(book);
+        })
+        .catch(err => {
+          res.status(500);
+          err.message = "Please fill all incomplete form fields";
+          next(err);
+        });
+    }
   });
 });
 
 notebookRoute.get("/delete/:id/:note", (req, res, next) => {
   let bookId = req.params.id;
   let noteId = req.params.note;
-  Notebook.findById(bookId, (err, book) => {
-    book.notes.id(noteId).remove();
-    book
-      .save()
-      .then(data => {
-        res.json(book);
-        console.log(book);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  Notebook.findById({ _id: bookId }, (err, book) => {
+    if (err) {
+      res.status(404);
+      next(err);
+    } else {
+      book.notes.id(noteId).remove();
+      book
+        .save()
+        .then(data => {
+          res.json(book);
+          console.log(book);
+        })
+        .catch(err => {
+          res.status(500);
+          next(err);
+        });
+    }
   });
 });
 
