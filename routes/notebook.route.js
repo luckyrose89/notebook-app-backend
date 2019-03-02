@@ -105,6 +105,8 @@ notebookRoute.post("/add/:id", (req, res, next) => {
   });
 });
 
+// bug crashing server from here onwards
+
 notebookRoute.get("/:id/:note", (req, res, next) => {
   let bookId = req.params.id;
   let noteId = req.params.note;
