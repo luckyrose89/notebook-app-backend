@@ -4,6 +4,7 @@ const notebookRoute = express.Router();
 let Notebook = require("../models/notebook.model");
 
 // Get all notebooks
+//tested
 notebookRoute.get("/", (req, res) => {
   Notebook.find((err, notebookData) => {
     if (err) {

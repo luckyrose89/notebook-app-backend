@@ -36,6 +36,10 @@ app.use((err, req, res, next) => {
 app.get("/", (req, res) => {
   res.send("Welcome to notebook API");
 });
+app.get("*", function(req, res) {
+  res.status(404);
+  res.send("Sorry the page you're looking for does not exist!");
+});
 
 app.listen(PORT, () => {
   console.log("Server is running on PORT: ", PORT);
