@@ -5,7 +5,7 @@ let Notebook = require("../models/notebook.model");
 
 // Get all notebooks
 //tested
-notebookRoute.get("/", (req, res) => {
+notebookRoute.get("/", (req, res, next) => {
   Notebook.find((err, notebookData) => {
     if (err) {
       res.status(404);
@@ -32,7 +32,7 @@ notebookRoute.post("/", (req, res, next) => {
       next(err);
     });
 });
-
+//tested
 notebookRoute.get("/:id", (req, res, next) => {
   Notebook.findById({ _id: req.params.id }, (err, book) => {
     if (err) {
@@ -44,7 +44,7 @@ notebookRoute.get("/:id", (req, res, next) => {
     }
   });
 });
-
+//tested
 notebookRoute.post("/:id", (req, res, next) => {
   Notebook.findById({ _id: req.params.id }, (err, book) => {
     if (err) {
@@ -65,7 +65,7 @@ notebookRoute.post("/:id", (req, res, next) => {
     }
   });
 });
-
+//tested
 notebookRoute.delete("/:id", (req, res, next) => {
   Notebook.findOneAndDelete({ _id: req.params.id }, (err, book) => {
     if (err) {

@@ -1,3 +1,4 @@
+"use strict";
 // server.js for the app
 
 require("dotenv").config();
@@ -6,7 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const PORT = 3001;
 const cors = require("cors");
-const notebookRoute = require("./routes/notebook.route");
+const notebookRoute = require("./routers/notebook.route");
 const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
