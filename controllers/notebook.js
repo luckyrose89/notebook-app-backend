@@ -58,3 +58,27 @@ const deleteOne = async (req, res, next) => {
     return next(err);
   }
 };
+
+// Create a notepage
+const createNotepage = async (req, res, next) => {};
+
+// Get a notepage
+const getNotepage = async (req, res, next) => {};
+
+// Update a Notepage
+const updateNotepage = async (req, res, next) => {};
+
+// delete a notepage
+const deleteNotepage = async (req, res, next) => {};
+
+exports = module.exports = {
+  getAll,
+  create,
+  getOne,
+  updateOne,
+  deleteOne,
+  createNotepage,
+  getNotepage,
+  updateNotepage,
+  deleteNotepage
+};
