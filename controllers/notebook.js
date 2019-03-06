@@ -7,7 +7,7 @@ const Notebook = require("../models/notebook.model");
 const getAll = async (req, res, next) => {
   try {
     const notebooks = await Notebook.find();
-    res.status(200).json(notebooks);
+    return res.status(200).json(notebooks);
   } catch (err) {
     return next(err);
   }
@@ -18,7 +18,7 @@ const create = async (req, res, next) => {
   const notebook = new Notebook(req.body);
   try {
     const newNotebook = await notebook.save();
-    res.status(200).json({ notebook: newNotebook });
+    return res.status(200).json({ notebook: newNotebook });
   } catch (err) {
     return next(err);
   }
@@ -28,7 +28,7 @@ const create = async (req, res, next) => {
 const getOne = async (req, res, next) => {
   try {
     const notebook = await Notebook.findById({ _id: req.params.id });
-    res.status(200).json(notebook);
+    return res.status(200).json(notebook);
   } catch (err) {
     return next(err);
   }
@@ -39,7 +39,7 @@ const updateOne = async (req, res, next) => {
   try {
     const updatedNotebook = await Notebook.findById({ _id: req.params.id });
     updatedNotebook.title = req.body.title;
-    updatedNotebook
+    return updatedNotebook
       .save()
       .then(() => res.json({ message: "Database updated!" }));
   } catch (err) {
@@ -53,7 +53,7 @@ const deleteOne = async (req, res, next) => {
     const deleteNotebook = await Notebook.findOneAndDelete({
       _id: req.params.id
     });
-    res.status(200).json(deleteNotebook);
+    return res.status(200).json(deleteNotebook);
   } catch (err) {
     return next(err);
   }

@@ -6,20 +6,9 @@ let flashcards = new Schema({
   back: { type: String, required: true }
 });
 
-let notePage = new Schema({
-  title: { type: String, required: true },
-  questionAnswer: [
-    {
-      question: { type: String, required: true },
-      answer: { type: String, required: true }
-    }
-  ],
-  summary: { type: String, required: true }
-});
-
 let notebookSchema = new Schema({
   title: { type: String, required: true, max: 100 },
-  notes: [notePage],
+  notes: [{ type: Schema.Types.ObjectId, ref: "notepage" }],
   flashcards: [flashcards]
 });
 
