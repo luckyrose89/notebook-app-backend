@@ -1,6 +1,7 @@
 "use strict";
 
 const Notebook = require("../models/notebook.model");
+const Notepage = require("../models/notepage.model");
 
 // Notebook control functions
 // Get all notebooks
