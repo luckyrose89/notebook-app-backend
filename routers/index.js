@@ -1,3 +1,3 @@
 module.exports = {
-  notebookRouter: require("./notebook")
+  notebookRouter: require("./notebook.route")
 };

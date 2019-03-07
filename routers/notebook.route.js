@@ -1,21 +1,24 @@
 const express = require("express");
 const notebookRouter = express.Router();
 
-const { notebookCtrl } = require("../controllers");
+const { notebookCtrl } = require("../controllers/index");
 
 // Notebook CRUD routes
 notebookRouter.get("/", notebookCtrl.getAll);
 notebookRouter.post("/", notebookCtrl.create);
 
-notebookRouter.get("/:bookId", notebookCtrl.getById);
-notebookRouter.put("/:bookId", notebookCtrl.updateById);
-notebookRouter.delete("/:bookId", notebookCtrl.deleteById);
+notebookRouter.get("/:bookId", notebookCtrl.getOne);
+notebookRouter.put("/:bookId", notebookCtrl.updateOne);
+notebookRouter.delete("/:bookId", notebookCtrl.deleteOne);
 
 // Notepage CRUD routes
 notebookRouter.post("/add/:bookId", notebookCtrl.createNotepage);
 
-notebookRouter.get("/:bookId/:noteId", notebookCtrl.getNotepage);
-notebookRouter.post("/:id/:note", notebookCtrl.updateNotepage);
-notebookRouter.get("/delete/:id/:note", notebookCtrl.deleteNotepage);
+notebookRouter.get("/:bookId/notes/:noteId", notebookCtrl.getNotepage);
+notebookRouter.put("/:bookId/notes/:noteId", notebookCtrl.updateNotepage);
+notebookRouter.delete(
+  "/delete/:bookId/notes/:noteId",
+  notebookCtrl.deleteNotepage
+);
 
-module.exports = notebookRoute;
+module.exports = notebookRouter;

@@ -20,7 +20,7 @@ let notePage = new Schema({
 
 let notebookSchema = new Schema({
   title: { type: String, required: true, max: 100 },
-  notes: [notepage],
+  notes: [notePage],
   flashcards: [flashcards]
 });
 

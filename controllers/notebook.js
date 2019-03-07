@@ -59,6 +59,7 @@ const deleteOne = async (req, res, next) => {
   }
 };
 
+// Notepage CRUD Routes
 // Create a notepage
 const createNotepage = async (req, res, next) => {
   try {
