@@ -14,8 +14,7 @@ let notePage = new Schema({
       answer: { type: String, required: true }
     }
   ],
-  summary: { type: String, required: true },
-  notebook: { type: Schema.Types.ObjectId, ref: "notebook", required: true }
+  summary: { type: String, required: true }
 });
 
 let notebookSchema = new Schema({

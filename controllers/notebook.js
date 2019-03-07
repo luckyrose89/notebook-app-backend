@@ -41,7 +41,8 @@ const updateOne = async (req, res, next) => {
     updatedNotebook.title = req.body.title;
     return updatedNotebook
       .save()
-      .then(() => res.json({ message: "Database updated!" }));
+      .then(() => res.json({ message: "Database updated!" }))
+      .catch(err => next(err));
   } catch (err) {
     return next(err);
   }
@@ -83,6 +84,9 @@ const getNotepage = async (req, res, next) => {
   try {
     const notebook = await Notebook.findById({ _id: req.params.bookId });
     const notepage = notebook.notes.id(req.params.noteId);
+    if (notepage === null) {
+      throw new Error("The requested notepage does not exist");
+    }
     return res.status(200).json(notepage);
   } catch (err) {
     return next(err);
@@ -98,7 +102,10 @@ const updateNotepage = async (req, res, next) => {
     notepage.summary = req.body.summary;
     notepage.questionAnswer = req.body.questionAnswer;
 
-    return notebook.save().then(response => res.json(notebook));
+    return notebook
+      .save()
+      .then(response => res.json(notebook))
+      .catch(err => next(err));
   } catch (err) {
     return next(err);
   }
@@ -109,7 +116,10 @@ const deleteNotepage = async (req, res, next) => {
   try {
     const notebook = await Notebook.findById({ _id: req.params.bookId });
     notebook.notes.id(req.params.noteId).remove();
-    return notebook.save().then(response => res.json(notebook));
+    return notebook
+      .save()
+      .then(response => res.json(notebook))
+      .catch(err => next(err));
   } catch (err) {
     return next(err);
   }

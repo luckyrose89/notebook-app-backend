@@ -16,9 +16,6 @@ notebookRouter.post("/add/:bookId", notebookCtrl.createNotepage);
 
 notebookRouter.get("/:bookId/notes/:noteId", notebookCtrl.getNotepage);
 notebookRouter.put("/:bookId/notes/:noteId", notebookCtrl.updateNotepage);
-notebookRouter.delete(
-  "/delete/:bookId/notes/:noteId",
-  notebookCtrl.deleteNotepage
-);
+notebookRouter.delete("/:bookId/notes/:noteId", notebookCtrl.deleteNotepage);
 
 module.exports = notebookRouter;
