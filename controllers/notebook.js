@@ -18,7 +18,7 @@ const create = async (req, res, next) => {
   const notebook = new Notebook(req.body);
   try {
     const newNotebook = await notebook.save();
-    return res.status(200).json({ notebook: newNotebook });
+    return res.status(200).json(newNotebook);
   } catch (err) {
     return next(err);
   }
@@ -41,7 +41,7 @@ const updateOne = async (req, res, next) => {
     updatedNotebook.title = req.body.title;
     return updatedNotebook
       .save()
-      .then(() => res.json({ message: "Database updated!" }))
+      .then(() => res.json(updatedNotebook))
       .catch(err => next(err));
   } catch (err) {
     return next(err);
