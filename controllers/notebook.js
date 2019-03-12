@@ -20,6 +20,7 @@ const create = async (req, res, next) => {
     const newNotebook = await notebook.save();
     return res.status(200).json(newNotebook);
   } catch (err) {
+    res.status(500);
     return next(err);
   }
 };
@@ -30,6 +31,7 @@ const getOne = async (req, res, next) => {
     const notebook = await Notebook.findById({ _id: req.params.bookId });
     return res.status(200).json(notebook);
   } catch (err) {
+    res.status(404);
     return next(err);
   }
 };
@@ -44,6 +46,7 @@ const updateOne = async (req, res, next) => {
       .then(() => res.json(updatedNotebook))
       .catch(err => next(err));
   } catch (err) {
+    res.status(500);
     return next(err);
   }
 };
@@ -56,6 +59,7 @@ const deleteOne = async (req, res, next) => {
     });
     return res.status(200).json(deleteNotebook);
   } catch (err) {
+    res.status(404);
     return next(err);
   }
 };
@@ -75,6 +79,7 @@ const createNotepage = async (req, res, next) => {
       res.json(response);
     });
   } catch (err) {
+    res.status(500);
     return next(err);
   }
 };
@@ -89,6 +94,7 @@ const getNotepage = async (req, res, next) => {
     }
     return res.status(200).json(notepage);
   } catch (err) {
+    res.status(404);
     return next(err);
   }
 };
@@ -107,6 +113,7 @@ const updateNotepage = async (req, res, next) => {
       .then(response => res.json(notebook))
       .catch(err => next(err));
   } catch (err) {
+    res.status(500);
     return next(err);
   }
 };
@@ -121,6 +128,7 @@ const deleteNotepage = async (req, res, next) => {
       .then(response => res.json(notebook))
       .catch(err => next(err));
   } catch (err) {
+    res.status(404);
     return next(err);
   }
 };
