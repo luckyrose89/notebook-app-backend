@@ -39,12 +39,10 @@ const getOne = async (req, res, next) => {
 // Update a specific notebook
 const updateOne = async (req, res, next) => {
   try {
-    const updatedNotebook = await Notebook.findById({ _id: req.params.bookId });
-    updatedNotebook.title = req.body.title;
-    return updatedNotebook
-      .save()
-      .then(() => res.json(updatedNotebook))
-      .catch(err => next(err));
+    const notebook = await Notebook.findById({ _id: req.params.bookId });
+    notebook.title = req.body.title;
+    const updatedNotebook = await notebook.save();
+    return res.status(200).json(updatedNotebook);
   } catch (err) {
     res.status(500);
     return next(err);
