@@ -72,10 +72,8 @@ const createNotepage = async (req, res, next) => {
       questionAnswer: req.body.questionAnswer,
       summary: req.body.summary
     });
-
-    return notebook.save().then(response => {
-      res.json(response);
-    });
+    const updateNotebook = await notebook.save();
+    return res.status(200).json(updateNotebook);
   } catch (err) {
     res.status(500);
     return next(err);
@@ -121,10 +119,8 @@ const deleteNotepage = async (req, res, next) => {
   try {
     const notebook = await Notebook.findById({ _id: req.params.bookId });
     notebook.notes.id(req.params.noteId).remove();
-    return notebook
-      .save()
-      .then(response => res.json(notebook))
-      .catch(err => next(err));
+    const updateNotebook = notebook.save();
+    return res.status(200).json(updateNotebook);
   } catch (err) {
     res.status(404);
     return next(err);
