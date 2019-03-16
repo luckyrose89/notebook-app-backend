@@ -119,7 +119,7 @@ const deleteNotepage = async (req, res, next) => {
   try {
     const notebook = await Notebook.findById({ _id: req.params.bookId });
     notebook.notes.id(req.params.noteId).remove();
-    const updateNotebook = notebook.save();
+    const updateNotebook = await notebook.save();
     return res.status(200).json(updateNotebook);
   } catch (err) {
     res.status(404);
